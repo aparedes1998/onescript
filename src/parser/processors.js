@@ -167,6 +167,20 @@ const processors = {
     return { type: 'IfStatement', test, consequent, alternate };
   },
 
+  MapEntry(key, op, value) {
+    let type = "MapEntry";
+    if (key === "..."){
+      type = "SpreadMapEntry";
+      return { type, argument: op };
+    }
+    return { type, key, value };
+  },
+
+  MapExpression(_ob, ...entries) {
+    entries = entries.filter((elem) => elem !== ',' && elem !== '}');
+    return { type: 'MapExpression', entries};
+  },
+
   MemberExpression(object, op, property) {
     const computed = op === '[';
     return { type: 'MemberExpression', object, property, computed };
@@ -236,7 +250,29 @@ const processors = {
     return { type: 'ReturnStatement', argument };
   },
 
+  // SetEntry (fst, snd) {
+  //   let type = "SetEntry";
+  //   if (fst === "..."){
+  //     type = "SpreadSetEntry";
+  //     return { type, argument: snd };
+  //   }
+  //   return { type, fst };
+  // },
+
+  SetExpression(_ob, ...elements) {
+    elements = elements.filter((elem) => elem !== ',' && elem !== '}');
+    return { type: 'NewExpression', 
+    callee: { type: 'Identifier', name: 'Set' }, 
+    arguments: [
+      {
+        type: 'ArrayExpression',
+        elements
+      }      
+    ]};
+  },
+
   Script(...body) {
+    body = body.filter((elem) => elem !== ';');
     return { type: 'Program', sourceType: 'script', body };
   },
 

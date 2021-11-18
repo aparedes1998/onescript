@@ -111,7 +111,7 @@ declaration {
 }
 
 FunctionDeclaration {
-  async? !statement kw<"function"> Star? VariableDefinition? functionSignature Block
+  async? !statement kw<"function"> Star? VariableDefinition functionSignature Block
 }
 
 ClassDeclaration {
@@ -251,6 +251,8 @@ expressionNoComma {
   nullValue |
   kw<"super"> |
   RegExp |
+  MapExpression |
+  SetExpression |
   ArrayExpression |
   ObjectExpression { "{" commaSep<Property> ~destructure "}" } |
   NewExpression { kw<"new"> expressionNoComma (!newArgs TypeArgList? ArgList)? } |
@@ -279,6 +281,20 @@ ParenthesizedExpression { "(" expression ")" }
 
 ArrayExpression {
   "[" commaSep1<"..."? expressionNoComma | ""> ~destructure "]"
+}
+
+SetExpression {
+  @extend<identifier, "Set"> "{" commaSep1<"..."? expressionNoComma | ""> ~destructure "}"
+}
+
+
+
+MapExpression {
+  @extend<identifier, "Map"> "{" commaSep<MapEntry> ~destructure "}" 
+}
+
+MapEntry {
+  expressionNoComma "=>" expressionNoComma | "..." expressionNoComma
 }
 
 propName { PropertyNameDefinition | "[" expression "]" | Number | String }
@@ -569,7 +585,8 @@ questionOp[@name=LogicOp] { "?" }
 
   identifier { word }
 
-  @precedence { spaces, newline, identifier }
+  @precedence { spaces, newline, "Map", identifier}
+  @precedence { spaces, newline, "Set", identifier}
 
   @precedence { spaces, newline, JSXIdentifier }
 
