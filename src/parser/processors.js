@@ -167,17 +167,46 @@ const processors = {
     return { type: 'IfStatement', test, consequent, alternate };
   },
 
-  MapEntry(key, op, value) {
-    let type = "MapEntry";
-    if (key === "..."){
-      type = "SpreadMapEntry";
-      return { type, argument: op };
-    }
-    return { type, key, value };
-  },
+  // MapEntry(key, op, value) {
+  //   let type = "MapEntry";
+  //   if (key === "..."){
+  //     type = "SpreadMapEntry";
+  //     return { type, argument: op };
+  //   }
+  //   return { type, key, value };
+  // },
 
   MapExpression(_ob, ...entries) {
-    entries = entries.filter((elem) => elem !== ',' && elem !== '}');
+    const elements = [];
+    for (let i = 0; i < entries.length; i += 1) {
+      const part = entries[i];
+      if (part !== '}') {
+        if (part === ',' || part === '{') {
+          if (entries[i + 1] === ',') {
+            elements.push(null); // Empty element.
+          }
+        } else if (part === '...') {
+          i += 1;
+          elements.push({ type: 'SpreadElement', argument: entries[i] });
+        } else if (entries[i + 1] === '=>'){
+          elements.push({
+            type: 'ArrayExpression',
+            elements:[part, entries[i + 2]]
+          });
+        } else {
+          continue;
+        }
+      }
+    }
+    return { type: 'NewExpression', 
+    callee: { type: 'Identifier', name: 'Map' }, 
+    arguments: [
+      {
+        type: 'ArrayExpression',
+        elements
+      }      
+    ]};
+    console.log(elements);
     return { type: 'MapExpression', entries};
   },
 
@@ -259,8 +288,23 @@ const processors = {
   //   return { type, fst };
   // },
 
-  SetExpression(_ob, ...elements) {
-    elements = elements.filter((elem) => elem !== ',' && elem !== '}');
+  SetExpression(_ob, ...parts) {
+    const elements = [];
+    for (let i = 0; i < parts.length; i += 1) {
+      const part = parts[i];
+      if (part !== '}') {
+        if (part === ',' || part === '{') {
+          if (parts[i + 1] === ',') {
+            elements.push(null); // Empty element.
+          }
+        } else if (part === '...') {
+          i += 1;
+          elements.push({ type: 'SpreadElement', argument: parts[i] });
+        } else {
+          elements.push(part);
+        }
+      }
+    }
     return { type: 'NewExpression', 
     callee: { type: 'Identifier', name: 'Set' }, 
     arguments: [

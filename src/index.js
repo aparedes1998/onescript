@@ -4,8 +4,9 @@ const { parse } = require('./parser/parser');
 const { generate } = require('escodegen');
 
 function main() {
-  const result = parse('const a = Set{1, 2, 3, 4} ');
+  const result = parse('const a = Map{1 => 2, ...Map{3 => 4}}');
   console.log(generate(result));
-  //console.log(inspect(result, false, 10));
+  
+  //console.log(inspect(result, false, 20));
 }
 main();

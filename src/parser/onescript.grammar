@@ -288,14 +288,10 @@ SetExpression {
 }
 
 
-
 MapExpression {
-  @extend<identifier, "Map"> "{" commaSep<MapEntry> ~destructure "}" 
+  @extend<identifier, "Map"> "{" commaSep<expressionNoComma "=>" expressionNoComma | "..." expressionNoComma> ~destructure "}" 
 }
 
-MapEntry {
-  expressionNoComma "=>" expressionNoComma | "..." expressionNoComma
-}
 
 propName { PropertyNameDefinition | "[" expression "]" | Number | String }
 
