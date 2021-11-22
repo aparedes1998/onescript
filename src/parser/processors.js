@@ -370,6 +370,9 @@ const processors = {
   VariableDeclaration(kind, ...defs) {
     const declarations = [];
     let op;
+    if (kind === "var"){
+      kind = "let";
+    }
     do {
       const decl = { type: 'VariableDeclarator', id: defs.shift() };
       op = defs.shift();
