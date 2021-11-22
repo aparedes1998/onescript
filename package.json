@@ -32,6 +32,9 @@
   },
   "dependencies": {
     "@lezer/lr": "^0.15.4",
-    "escodegen": "^2.0.0"
-  }
+    "escodegen": "^2.0.0",
+    "prompt-sync": "^4.2.0",
+    "yargs": "^17.2.1"
+  },
+  "bin": "src/index.js"
 }
