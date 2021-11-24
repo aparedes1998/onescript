@@ -38,11 +38,7 @@ function main() {
 
   const parsedResult = parse(source);
   let result;
-  if (argv.minify) {
-    result = generate(parsedResult, { format: FORMAT_MINIFY });
-  } else {
-    result = generate(parsedResult);
-  }
+  let generateCode = true;
 
   if (argv.ast) {
     fs.writeFile(
@@ -56,11 +52,18 @@ function main() {
         console.log("Generated output.json successfully");
       }
     );
+    if (!argv.output) {
+      generateCode = false;
+    }
   }
 
-  if (argv.output) {
-    if (argv.minify) {
-    }
+  if (argv.minify && generateCode) {
+    result = generate(parsedResult, { format: FORMAT_MINIFY });
+  } else {
+    result = generate(parsedResult);
+  }
+
+  if (argv.output && generateCode) {
     output = argv.output;
   } else {
     console.log(result);
