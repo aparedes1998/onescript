@@ -20,3 +20,7 @@ npm-debug.log
 # Caches
 .cache
 .npm
+
+# Others
+src/output.json
+src/output.js
