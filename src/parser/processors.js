@@ -167,7 +167,20 @@ const processors = {
   },
 
   FunctionDeclaration(...parts) {
-    return { ...parseFunction(parts), type: "FunctionDeclaration" };
+    return {
+      type: "VariableDeclaration",
+      kind: "const",
+      declarations: [
+        {
+          type: "VariableDeclarator",
+          id: {
+            type: "Identifier",
+            name: "f",
+          },
+          init: { ...parseFunction(parts), type: "FunctionExpression" },
+        },
+      ],
+    };
   },
 
   FunctionExpression(...parts) {
