@@ -1,0 +1,40 @@
+{
+    "type": "Program",
+    "sourceType": "script",
+    "body": [
+        {
+            "type": "VariableDeclaration",
+            "kind": "let",
+            "declarations": [
+                {
+                    "type": "VariableDeclarator",
+                    "id": {
+                        "type": "Identifier",
+                        "name": "x"
+                    },
+                    "init": {
+                        "type": "Literal",
+                        "value": 4,
+                        "raw": "4"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "AssignmentExpression",
+                "left": {
+                    "type": "Identifier",
+                    "name": "y"
+                },
+                "operator": "=",
+                "right": {
+                    "type": "Literal",
+                    "value": 3,
+                    "raw": "3"
+                }
+            }
+        }
+    ]
+}

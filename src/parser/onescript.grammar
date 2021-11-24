@@ -155,7 +155,7 @@ PropertyDeclaration[group=ClassItem] {
 }
 
 VariableDeclaration {
-  (kw<"var"> | kw<"const">) commaSep1<patternAssignTyped> semi
+  (kw<"var"> | kw<"const">) patternAssignTyped semi
 }
 
 TypeAliasDeclaration {
