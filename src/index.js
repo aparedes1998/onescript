@@ -57,16 +57,18 @@ function main() {
     }
   }
 
-  if (argv.minify && generateCode) {
-    result = generate(parsedResult, { format: FORMAT_MINIFY });
-  } else {
-    result = generate(parsedResult);
-  }
+  if (generateCode) {
+    if (argv.minify) {
+      result = generate(parsedResult, { format: FORMAT_MINIFY });
+    } else {
+      result = generate(parsedResult);
+    }
 
-  if (argv.output && generateCode) {
-    output = argv.output;
-  } else {
-    console.log(result);
+    if (argv.output) {
+      output = argv.output;
+    } else {
+      console.log(result);
+    }
   }
 
   if (argv.log) {
