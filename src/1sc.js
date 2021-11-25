@@ -1,13 +1,18 @@
 #!/usr/bin/env node
 
-const { promises: fs } = require("fs");
+const fs = require("fs");
 const { inspect } = require("util");
 const { parse } = require("./parser/parser");
 const { generate, FORMAT_MINIFY } = require("escodegen");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
-const { argv } = require("process");
 const prompt = require("prompt-sync")();
+
+function logFile(fileName, content) {
+  if (fileName) {
+    fs.writeFileSync(fileName, content + "\n", "utf8");
+  }
+}
 
 function main() {
   let source;
@@ -31,26 +36,25 @@ function main() {
     .parse();
 
   if (argv.source) {
-    source = argv.source;
+    source = fs.readFileSync(argv.source, "utf-8");
   } else {
-    source = prompt("Escriba su código a continuación: ");
+    source = prompt("");
   }
 
-  const parsedResult = parse(source);
+  let logFileName;
+  if (argv.log) {
+    logFileName = argv.log;
+  }
+
+  const parsedResult = parse(source, logFileName);
   let result;
   let generateCode = true;
 
-  if (argv.ast) {
-    fs.writeFile(
+  if (argv.ast && parsedResult) {
+    fs.writeFileSync(
       "output.json",
       JSON.stringify(parsedResult, null, 4),
-      "utf8",
-      (err) => {
-        if (err) {
-          return console.log(err);
-        }
-        console.log("Generated output.json successfully");
-      }
+      "utf8"
     );
     if (!argv.output) {
       generateCode = false;
@@ -59,9 +63,20 @@ function main() {
 
   if (generateCode) {
     if (argv.minify) {
-      result = generate(parsedResult, { format: FORMAT_MINIFY });
+      try {
+        logFile(logFileName, "Starting code generation (minified)", "utf8");
+        result = generate(parsedResult, { format: FORMAT_MINIFY });
+        logFile(logFileName, "Finished code generation (minified)", "utf8");
+      } catch (error) {
+        if (logFileName) {
+          logFile(logFileName, error.stack.toString());
+        }
+        throw error;
+      }
     } else {
+      logFile(logFileName, "Starting code generation", "utf8");
       result = generate(parsedResult);
+      logFile(logFileName, "Finished code generation", "utf8");
     }
 
     if (argv.output) {
@@ -71,22 +86,10 @@ function main() {
     }
   }
 
-  if (argv.log) {
-    // Loggear cosas
-  }
-
   if (output) {
-    fs.writeFile(output, result, "utf8", (err) => {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Generated output.js successfully");
-    });
+    fs.writeFileSync(output, result, "utf8");
   }
-  //console.log(generate(result));
-  //console.log(inspect(result, false, 20));
 }
-//main();
 
 if (require.main === module) {
   main();

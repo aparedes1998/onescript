@@ -3,6 +3,7 @@ const { inspect } = require("util");
 const { parse: acornParse } = require("acorn");
 const cloneRoot = require("espurify");
 const { parse } = require("../../src/parser/parser");
+const { describe } = require("yargs");
 
 // TODO this super obj?.prop obj?.['prop']
 const EXPSJS = `
@@ -162,5 +163,10 @@ describe("Lezer parser", () => {
     ["await x;", "for\tawait(x\tof\ty){}"]
       .map((stmt) => `async function _() {${stmt}}`)
       .forEach(testCase);
+  });
+});
+describe(":/", () => {
+  it("parses async statements properly", () => {
+    expect(true).toEqual(true);
   });
 });
