@@ -36,7 +36,7 @@ function main() {
     .parse();
 
   if (argv.source) {
-    source = argv.source;
+    source = fs.readFileSync(argv.source, "utf-8");
   } else {
     source = prompt("");
   }
