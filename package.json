@@ -2,7 +2,7 @@
   "name": "onescript",
   "version": "0.0.2",
   "description": "OneScript language project",
-  "main": "index.js",
+  "main": "1sc.js",
   "scripts": {
     "build:parser": "lezer-generator src/parser/onescript.grammar --cjs -o src/parser/lezer-parser",
     "test": "npx jest test/specs/"
@@ -33,8 +33,9 @@
   "dependencies": {
     "@lezer/lr": "^0.15.4",
     "escodegen": "^2.0.0",
+    "onescript": "^0.0.0",
     "prompt-sync": "^4.2.0",
     "yargs": "^17.2.1"
   },
-  "bin": "src/index.js"
+  "bin": "src/1sc.js"
 }
