@@ -11,6 +11,16 @@ describe("Escodegen generator", () => {
     expect(
       generate(parse("Map{1 => 2, ...Map{3 => 4}}"), { format: FORMAT_MINIFY })
     ).toBe("new Map([[1,2],...new Map([[3,4]])])");
+    expect(
+      generate(
+        parse(
+          "Map{1 => 2, ...Map{3 => 4}, 5 => 35, ...Map{5 => 8}, ...Map{10 => 11}}"
+        ),
+        { format: FORMAT_MINIFY }
+      )
+    ).toBe(
+      "new Map([[1,2],...new Map([[3,4]]),[5,35],...new Map([[5,8]]),...new Map([[10,11]])])"
+    );
   });
 
   it("Testing onescript Set", () => {
@@ -22,6 +32,11 @@ describe("Escodegen generator", () => {
     expect(generate(parse('Set{..."abc"}'), { format: FORMAT_MINIFY })).toBe(
       "new Set([...'abc'])"
     );
+    expect(
+      generate(parse('Set{..."abc", 5, 6, ..."def", 4}'), {
+        format: FORMAT_MINIFY,
+      })
+    ).toBe("new Set([...'abc',5,6,...'def',4])");
   });
 
   it("Testing comma operator", () => {
@@ -38,5 +53,14 @@ describe("Escodegen generator", () => {
       parse("const f = function f(x, y) {return x + y; };")
     ).not.toThrow();
     expect(() => parse("x, y = [1,2]")).toThrow();
+    expect(generate(parse("function f(x, y){}"))).toBe(
+      "const f = function f(x, y) {\n};"
+    );
+  });
+
+  it("Testing var to let", () => {
+    expect(
+      generate(parse("var f = [1,2,3,4];"), { format: FORMAT_MINIFY })
+    ).toBe("let f=[1,2,3,4]");
   });
 });

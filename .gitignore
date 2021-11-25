@@ -25,3 +25,7 @@ npm-debug.log
 src/output.json
 src/output.js
 src/output.log
+
+output.log
+output.json
+output.js
