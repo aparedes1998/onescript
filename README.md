@@ -1,6 +1,7 @@
 # Curso de Compiladores 2021 Segundo semestre 2021 - Equipo 03
 
 - [Curso de Compiladores 2021 Segundo semestre 2021 - Equipo 03](#curso-de-compiladores-2021-segundo-semestre-2021---equipo-03)
+  - [Introducción](#introducción)
   - [Features (v0.0.2)](#features-v002)
     - [Extras](#extras)
     - [Verificación](#verificación)
@@ -12,6 +13,8 @@
   - [Contribuidores](#contribuidores)
 
 - - -
+
+## Introducción
 
 El presente repositorio contiene la implementación del paquete para NodeJS 14+ solicitado por la cátedra del curso Compiladores de la Universidad Católica del Uruguay el segundo semestre del año 2021, como proyecto final de curso.
 
@@ -75,9 +78,9 @@ onescript/                                  # Carpeta Raíz
 
 1. Clonar el repositorio
 2. Posicionarse en la carpeta raíz con `cd <ruta_repositorio>`
-3. Instalar paquete OneScript con `<comando>`
-4. Ejecutar el programa con `<comando>`
-5. Ejecutar pruebas con `<comando>`
+3. Instalar paquete 1s con `npm i -g onescript` (puede requerir `sudo`)
+4. Ejecutar el programa con `npx onescript`
+5. Ejecutar pruebas con `<npx jest test>`
 
 ## Enlaces de Interés
 
