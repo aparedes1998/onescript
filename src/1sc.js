@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { promises: fs } = require("fs");
+const fs = require("fs");
 const { inspect } = require("util");
 const { parse } = require("./parser/parser");
 const { generate, FORMAT_MINIFY } = require("escodegen");
@@ -33,7 +33,7 @@ function main() {
   if (argv.source) {
     source = argv.source;
   } else {
-    source = prompt("Escriba su código a continuación: ");
+    source = fs.readFileSync(process.stdin.fd, { encoding: "utf-8" }); // STDIN_FILENO = 0;
   }
 
   const parsedResult = parse(source);
@@ -41,7 +41,7 @@ function main() {
   let generateCode = true;
 
   if (argv.ast) {
-    fs.writeFile(
+    fs.writeFileSync(
       "output.json",
       JSON.stringify(parsedResult, null, 4),
       "utf8",
@@ -76,7 +76,7 @@ function main() {
   }
 
   if (output) {
-    fs.writeFile(output, result, "utf8", (err) => {
+    fs.writeFileSync(output, result, "utf8", (err) => {
       if (err) {
         return console.log(err);
       }

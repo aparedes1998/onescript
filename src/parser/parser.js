@@ -1,6 +1,6 @@
-const { inspect } = require('util');
-const { parser: lezerParser } = require('./lezer-parser');
-const processors = require('./processors');
+const { inspect } = require("util");
+const { parser: lezerParser } = require("./lezer-parser");
+const processors = require("./processors");
 
 function buildESTree(cursor, input) {
   const { name, from, to } = cursor;
@@ -15,16 +15,18 @@ function buildESTree(cursor, input) {
     args.push(input.substring(from, to));
   }
   const processor = processors[name];
-  if (processor) { // AST node
+  if (processor) {
+    // AST node
     return processor(...args);
   }
-  if (args.length === 1 && name === args[0]) { // Token
+  if (args.length === 1 && name === args[0]) {
+    // Token
     return name;
   }
   throw new SyntaxError(`Cannot process ${name}! Args: ${inspect(args)}`);
 }
 
-function parse(source) {
+function parse(source, logFile) {
   const tree = lezerParser.parse(source);
   const cursor = tree.cursor();
   const esTree = buildESTree(cursor, source);

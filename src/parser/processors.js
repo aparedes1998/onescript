@@ -191,15 +191,6 @@ const processors = {
     return { type: "IfStatement", test, consequent, alternate };
   },
 
-  // MapEntry(key, op, value) {
-  //   let type = "MapEntry";
-  //   if (key === "..."){
-  //     type = "SpreadMapEntry";
-  //     return { type, argument: op };
-  //   }
-  //   return { type, key, value };
-  // },
-
   MapExpression(_ob, ...entries) {
     const elements = [];
     for (let i = 0; i < entries.length; i += 1) {
@@ -318,15 +309,6 @@ const processors = {
   ReturnStatement(_return, argument) {
     return { type: "ReturnStatement", argument };
   },
-
-  // SetEntry (fst, snd) {
-  //   let type = "SetEntry";
-  //   if (fst === "..."){
-  //     type = "SpreadSetEntry";
-  //     return { type, argument: snd };
-  //   }
-  //   return { type, fst };
-  // },
 
   SetExpression(_ob, ...parts) {
     const elements = [];
