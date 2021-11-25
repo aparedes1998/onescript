@@ -26,5 +26,7 @@ describe("Escodegen generator", () => {
 
   it("Testing comma operator", () => {
     expect(() => parse("var x = 1, y = 2;")).toThrow();
+    expect(() => parse("const x = (f(33), g(7,7));")).toThrow();
+    expect(() => parse("x, y = [1,2]")).toThrow();
   });
 });
