@@ -1,5 +1,18 @@
 # Curso de Compiladores 2021 Segundo semestre 2021 - Equipo 03
 
+- [Curso de Compiladores 2021 Segundo semestre 2021 - Equipo 03](#curso-de-compiladores-2021-segundo-semestre-2021---equipo-03)
+  - [Features (v0.0.2)](#features-v002)
+    - [Extras](#extras)
+    - [Verificación](#verificación)
+  - [Estructura de la solución](#estructura-de-la-solución)
+  - [Instrucciones de uso](#instrucciones-de-uso)
+    - [Ejecución de código fuente](#ejecución-de-código-fuente)
+    - [Instalación como paquete npx](#instalación-como-paquete-npx)
+  - [Enlaces de Interés](#enlaces-de-interés)
+  - [Contribuidores](#contribuidores)
+
+- - -
+
 El presente repositorio contiene la implementación del paquete para NodeJS 14+ solicitado por la cátedra del curso Compiladores de la Universidad Católica del Uruguay el segundo semestre del año 2021, como proyecto final de curso.
 
 La solución es un compilador que toma código fuente OneScript y lo transforma a su equivalente en Javascript (versión ES2020). La representación de código (o AST) que emplea se basa en la representación estándar de ECMAScript, llamada ESTree.
@@ -31,7 +44,7 @@ El proyecto incluye incluir casos de prueba con una cobertura de al menos 80%, u
 
 Además de pruebas unitarias, incluye pruebas end-to-end para cada uno de los requerimientos.
 
-## Estructura de la solución
+## Estructura de la solución
 
 ```
 onescript/                                  # Carpeta Raíz
@@ -48,7 +61,7 @@ onescript/                                  # Carpeta Raíz
 └── README.md                               # Documentación
 ```
 
-## Instrucciones de uso
+## Instrucciones de uso
 
 ### Ejecución de código fuente
 
