@@ -234,12 +234,10 @@ switchItem {
 }
 
 expression[@isGroup=Expression] {
-  expressionNoComma | SequenceExpression
+  expressionNoComma
 }
 
-SequenceExpression {
-  expressionNoComma !comma ("," expressionNoComma)+
-}
+
 
 expressionNoComma {
   Number |

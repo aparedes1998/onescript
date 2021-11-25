@@ -175,7 +175,7 @@ const processors = {
           type: "VariableDeclarator",
           id: {
             type: "Identifier",
-            name: "f",
+            name: parts[1].name,
           },
           init: { ...parseFunction(parts), type: "FunctionExpression" },
         },
