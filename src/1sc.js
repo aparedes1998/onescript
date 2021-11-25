@@ -49,7 +49,6 @@ function main() {
   const parsedResult = parse(source, logFileName);
   let result;
   let generateCode = true;
-
   if (argv.ast && parsedResult) {
     fs.writeFileSync(
       "output.json",
