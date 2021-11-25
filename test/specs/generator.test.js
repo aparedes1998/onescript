@@ -29,4 +29,14 @@ describe("Escodegen generator", () => {
     expect(() => parse("const x = (f(33), g(7,7));")).toThrow();
     expect(() => parse("x, y = [1,2]")).toThrow();
   });
+
+  it("Testing function", () => {
+    expect(() =>
+      parse("const f = function (x, y) {return x + y; };")
+    ).toThrow();
+    expect(() =>
+      parse("const f = function f(x, y) {return x + y; };")
+    ).not.toThrow();
+    expect(() => parse("x, y = [1,2]")).toThrow();
+  });
 });
